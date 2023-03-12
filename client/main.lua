@@ -405,7 +405,7 @@ local Functions = {
                         local data = Models[GetEntityModel(entity)]
                         if data ~= nil then
                             self:CheckEntity(hit, data, entity, #(plyCoords - coords))
-                            SetPickupLight(entity, true)
+                            Citizen.InvokeNative(0x7DFB49BCDB73089A, entity, true)
                         end
                     end
 

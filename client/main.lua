@@ -253,12 +253,14 @@ local Functions = {
     end,
     CloneTable = function(self, table)
         local copy = {}
-        for k,v in pairs(table) do
-            if type(v) == 'table' then
-                copy[k] = self:CloneTable(v)
-            else
-                if type(v) == 'function' then v = nil end
-                copy[k] = v
+        if table ~= nil then
+            for k,v in pairs(table) do
+                if type(v) == 'table' then
+                    copy[k] = self:CloneTable(v)
+                else
+                    if type(v) == 'function' then v = nil end
+                    copy[k] = v
+                end
             end
         end
         return copy
@@ -403,7 +405,7 @@ local Functions = {
                         local data = Models[GetEntityModel(entity)]
                         if data ~= nil then
                             self:CheckEntity(hit, data, entity, #(plyCoords - coords))
-                            SetPickupLight(entity, true)
+                            Citizen.InvokeNative(0x7DFB49BCDB73089A, entity, true)
                         end
                     end
 

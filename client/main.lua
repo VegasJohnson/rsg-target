@@ -737,7 +737,7 @@ RegisterNUICallback('selectTarget', function(option, cb)
                 TriggerServerEvent(data.event, data)
             elseif data.type == "command" then
                 ExecuteCommand(data.event)
-            elseif data.type == "qrcommand" then
+            elseif data.type == "rsgcommand" then
                 TriggerServerEvent('RSGCore:CallCommand', data.event, data)
             else
                 TriggerEvent(data.event, data)

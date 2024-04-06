@@ -51,7 +51,7 @@ function ValidTarget(item) {
     $.each(item.data, function(index, item) {
         $(".target-label").append("<div id='target-" + index + "'<li><span class='target-icon'><i class='" + item.icon + " 'style ='" + item.style + " '></i></span>&nbsp" + item.label + "</li></div>");
         $("#target-" + index).hover((e) => {
-            $("#target-" + index).css("color", e.type === "mouseenter" ? "rgb(255, 18, 18)" : "white")
+            $("#target-" + index).css("color", e.type === "mouseenter" ? "rgb(224,22,29)" : "white")
         })
 
         $("#target-" + index + "").css("margin-bottom", "1vh");

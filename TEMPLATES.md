@@ -1,11 +1,11 @@
-# These are Templates for all the functions in qb-target
+# These are Templates for all the functions in rsg-target
 
 ## AddCircleZone
 
 ### Function Format
 
 ```lua
--- This is the function from how you would use it inside qb-target/client/main.lua
+-- This is the function from how you would use it inside rsg-target/client/main.lua
 Functions:AddCircleZone(name: string, center: vector3, radius: float, options: table, targetoptions: table)
 
 options = {
@@ -65,10 +65,10 @@ targetoptions = {
   },
 ```
 
-### Export option, this will go into any client side resource file aside from qb-target's one
+### Export option, this will go into any client side resource file aside from rsg-target's one
 
 ```lua
-exports['qb-target']:AddCircleZone("name", vector3(x, y, z), 1.5, { -- The name has to be unique, the coords a vector3 as shown and the 1.5 is the radius which has to be a float value
+exports['rsg-target']:AddCircleZone("name", vector3(x, y, z), 1.5, { -- The name has to be unique, the coords a vector3 as shown and the 1.5 is the radius which has to be a float value
   name = "name", -- This is the name of the zone recognized by PolyZone, this has to be unique so it doesn't mess up with other zones
   debugPoly = false, -- This is for enabling/disabling the drawing of the box, it accepts only a boolean value (true or false), when true it will draw the polyzone in green
 }, {
@@ -102,7 +102,7 @@ exports['qb-target']:AddCircleZone("name", vector3(x, y, z), 1.5, { -- The name 
 ### Function Format
 
 ```lua
--- This is the function from how you would use it inside qb-target/client/main.lua
+-- This is the function from how you would use it inside rsg-target/client/main.lua
 Functions:AddBoxZone(name: string, center: vector3, length: float, width: float, options: table, targetoptions: table)
 
 options = {
@@ -169,10 +169,10 @@ targetoptions = {
   },
 ```
 
-### Export option, this will go into any client side resource file aside from qb-target's one
+### Export option, this will go into any client side resource file aside from rsg-target's one
 
 ```lua
-exports['qb-target']:AddBoxZone("name", vector3(x, y, z), 1.5, 1.6, { -- The name has to be unique, the coords a vector3 as shown, the 1.5 is the length of the boxzone and the 1.6 is the width of the boxzone, the length and width have to be float values
+exports['rsg-target']:AddBoxZone("name", vector3(x, y, z), 1.5, 1.6, { -- The name has to be unique, the coords a vector3 as shown, the 1.5 is the length of the boxzone and the 1.6 is the width of the boxzone, the length and width have to be float values
   name = "name", -- This is the name of the zone recognized by PolyZone, this has to be unique so it doesn't mess up with other zones
   heading = 12.0, -- The heading of the boxzone, this has to be a float value
   debugPoly = false, -- This is for enabling/disabling the drawing of the box, it accepts only a boolean value (true or false), when true it will draw the polyzone in green
@@ -209,7 +209,7 @@ exports['qb-target']:AddBoxZone("name", vector3(x, y, z), 1.5, 1.6, { -- The nam
 ### Function Format
 
 ```lua
--- This is the function from how you would use it inside qb-target/client/main.lua
+-- This is the function from how you would use it inside rsg-target/client/main.lua
 Functions:AddPolyZone(name: string, points: table, options: table, targetoptions: table)
 
 points = {
@@ -278,13 +278,13 @@ targetoptions = {
   },
 ```
 
-### Export option, this will go into any client side resource file aside from qb-target's one
+### Export option, this will go into any client side resource file aside from rsg-target's one
 
 ```lua
 local points = {
   vector2(x, y, z), vector2(x, y, z), vector2(x, y, z)
 }
-exports['qb-target']:AddPolyZone("name", points, {
+exports['rsg-target']:AddPolyZone("name", points, {
   name = "name", -- This is the name of the zone recognized by PolyZone, this has to be unique so it doesn't mess up with other zones
   debugPoly = false, -- This is for enabling/disabling the drawing of the box, it accepts only a boolean value (true or false), when true it will draw the polyzone in green
   minZ = 36.7, -- This is the bottom of the polyzone, this can be different from the Z value in the coords, this has to be a float value
@@ -349,14 +349,14 @@ parameters = {
   },
 ```
 
-### Export option, this will go into any client side resource file aside from qb-target's one
+### Export option, this will go into any client side resource file aside from rsg-target's one
 
 ```lua
 local bones = {
   'boot',
   'bonnet'
 }
-exports['qb-target']:AddTargetBone(bones, { -- The bones can be a string or a table
+exports['rsg-target']:AddTargetBone(bones, { -- The bones can be a string or a table
   options = {
     { -- This is the first table with options, you can make as many options inside the options table as you want
       type = "client", -- This specifies the type of event the target has to trigger on click, this can be "client", "server", "command" or "qbcommand", this is OPTIONAL and will only work if the event is also specified
@@ -438,11 +438,11 @@ parameters = {
   },
 ```
 
-### Export option, this will go into any client side resource file aside from qb-target's one
+### Export option, this will go into any client side resource file aside from rsg-target's one
 
 ```lua
 local entity = CreatePed(2, `a_m_m_indian_01`, 500.0, 500.0, 100.0, 12.0, true, false)
-exports['qb-target']:AddTargetEntity(entity, { -- The specified entity number
+exports['rsg-target']:AddTargetEntity(entity, { -- The specified entity number
   options = {
     { -- This is the first table with options, you can make as many options inside the options table as you want
       type = "client", -- This specifies the type of event the target has to trigger on click, this can be "client", "server", "command" or "qbcommand", this is OPTIONAL and will only work if the event is also specified
@@ -531,11 +531,11 @@ targetoptions = {
   },
 ```
 
-### Export option, this will go into any client side resource file aside from qb-target's one
+### Export option, this will go into any client side resource file aside from rsg-target's one
 
 ```lua
 local entity = CreatePed(2, `a_m_m_indian_01`, 500.0, 500.0, 100.0, 12.0, true, false)
-exports['qb-target']:AddEntityZone("name", entity, { -- The specified entity number
+exports['rsg-target']:AddEntityZone("name", entity, { -- The specified entity number
   {
     name = "name", -- This is the name of the zone recognized by PolyZone, this has to be unique so it doesn't mess up with other zones
     debugPoly = false, -- This is for enabling/disabling the drawing of the box, it accepts only a boolean value (true or false), when true it will draw the polyzone in green  
@@ -624,13 +624,13 @@ parameters = {
   },
 ```
 
-### Export option, this will go into any client side resource file aside from qb-target's one
+### Export option, this will go into any client side resource file aside from rsg-target's one
 
 ```lua
 local models = {
   'a_m_m_indian_01',
 }
-exports['qb-target']:AddTargetModel(models { -- This defines the models, can be a string or a table
+exports['rsg-target']:AddTargetModel(models { -- This defines the models, can be a string or a table
     options = {
       { -- This is the first table with options, you can make as many options inside the options table as you want
         type = "client", -- This specifies the type of event the target has to trigger on click, this can be "client", "server", "command" or "qbcommand", this is OPTIONAL and will only work if the event is also specified

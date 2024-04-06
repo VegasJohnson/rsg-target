@@ -253,14 +253,12 @@ local Functions = {
     end,
     CloneTable = function(self, table)
         local copy = {}
-        if table ~= nil then
-            for k,v in pairs(table) do
-                if type(v) == 'table' then
-                    copy[k] = self:CloneTable(v)
-                else
-                    if type(v) == 'function' then v = nil end
-                    copy[k] = v
-                end
+        for k,v in pairs(table) do
+            if type(v) == 'table' then
+                copy[k] = self:CloneTable(v)
+            else
+                if type(v) == 'function' then v = nil end
+                copy[k] = v
             end
         end
         return copy
@@ -286,17 +284,22 @@ local Functions = {
             CreateThread(function()
                 repeat
                     if hasFocus then
-                        DisableControlAction(0, 0xA987235F, true) --  MOUSE MOVE RIGHT
+                        DisableControlAction(0, 0xA987235F, true) -- MOUSE MOVE RIGHT
                         DisableControlAction(0, 0xD2047988, true) -- MOUSE MOVE DOWN
                     end
-                    --Citizen.InvokeNative(0x2970929FD5F9FC89, PlayerId(), true) -- Disable weapon firing
-                    --Citizen.InvokeNative(0xFE99B66D079CF6BC, 0, 0x07CE1E61, true) -- disable attack
-                    --Citizen.InvokeNative(0xFE99B66D079CF6BC, 0, 0xF84FA74F, true) -- disable aim
-                    --Citizen.InvokeNative(0xFE99B66D079CF6BC, 0, 0xAC4BD4F1, true) -- disable weapon select
-                    --Citizen.InvokeNative(0xFE99B66D079CF6BC, 0, 0x73846677, true) -- disable weapon
-                    --Citizen.InvokeNative(0xFE99B66D079CF6BC, 0, 0x0AF99998, true) -- disable weapon
-                    --Citizen.InvokeNative(0xFE99B66D079CF6BC, 0, 0xB2F377E8, true) -- disable melee
-                    --Citizen.InvokeNative(0xFE99B66D079CF6BC, 0, 0xADEAF48C, true) -- disable melee
+                    DisablePlayerFiring(PlayerId(), true)
+                    DisableControlAction(0, 0x07CE1E61, true) -- INPUT_ATTACK
+                    DisableControlAction(0, 0xF84FA74F, true) -- INPUT_AIM
+                    DisableControlAction(0, 0x73846677, true) -- INPUT_DETONATE
+                    DisableControlAction(0, 0x0AF99998, true) -- INPUT_THROW_GRENADE
+                    DisableControlAction(0, 0xB2F377E8, true) -- INPUT_MELEE_ATTACK
+                    DisableControlAction(0, 0xADEAF48C, true) -- INPUT_MELEE_GRAPPLE_ATTACK
+                    DisableControlAction(0, 0x2277FAE9, true) -- INPUT_MELEE_GRAPPLE
+                    DisableControlAction(0, 0xB5EEEFB7, true) -- INPUT_MELEE_BLOCK
+                    DisableControlAction(0, 0x1F6EEB0F, true) -- INPUT_SELECT_WEAPON_UNARMED
+                    DisableControlAction(0, 0x96C61FDF, true) -- INPUT_SELECT_WEAPON_SNIPER
+                    DisableControlAction(0, 0x76D3EA05, true) -- INPUT_SELECT_WEAPON_SHOTGUN
+                    DisableControlAction(0, 0xC41ECEF8, true) -- INPUT_SELECT_WEAPON_SPECIAL
                     Wait(5)
                 until not targetActive
             end)
@@ -356,18 +359,18 @@ local Functions = {
                                         local closestBone2, closestPos2, closestBoneName2 = self:CheckBones(coords, entity, min, max, Config.VehicleBones)
 
                                         if closestBone ~= closestBone2 then
-                                            if IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+                                            if IsControlReleased(0, 0x8AAA0AD4) then
                                                 self:DisableTarget(true)
                                             else
                                                 self:LeftTarget()
                                             end
                                             self:DrawOutlineEntity(entity, false)
                                             break
-                                        elseif not hasFocus and IsDisabledControlPressed(0, RSGCore.Shared.Keybinds['MOUSE1']) then
+                                        elseif not hasFocus and IsDisabledControlPressed(0, 0x07CE1E61) then
                                             self:EnableNUI(self:CloneTable(sendData))
                                             self:DrawOutlineEntity(entity, false)
                                         elseif #(playerCoords - coords) > data.distance then
-                                            if IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+                                            if IsControlReleased(0, 0x8AAA0AD4) then
                                                 self:DisableTarget(true)
                                             else
                                                 self:LeftTarget()
@@ -375,7 +378,7 @@ local Functions = {
                                             self:DrawOutlineEntity(entity, false)
                                         end
                                     else
-                                        if IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+                                        if IsControlReleased(0, 0x8AAA0AD4) then
                                             self:DisableTarget(true)
                                         else
                                             self:LeftTarget()
@@ -385,7 +388,7 @@ local Functions = {
                                     end
                                     Wait(5)
                                 end
-                                if IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+                                if IsControlReleased(0, 0x8AAA0AD4) then
                                     self:DisableTarget(true)
                                 else
                                     self:LeftTarget()
@@ -405,10 +408,7 @@ local Functions = {
                         local data = Models[GetEntityModel(entity)]
                         if data ~= nil then
                             self:CheckEntity(hit, data, entity, #(plyCoords - coords))
-
-                            if Config.EnableObjectHighlight then
-                                Citizen.InvokeNative(0x7DFB49BCDB73089A, entity, true)
-                            end
+                            SetPickupLight(entity, true)
                         end
                     end
 
@@ -442,17 +442,17 @@ local Functions = {
                                     local playerCoords = GetEntityCoords(playerPed)
                                     local _, coords, entity2 = self:RaycastCamera(hit)
                                     if not zone:isPointInside(coords) then
-                                        if IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+                                        if IsControlReleased(0, 0x8AAA0AD4) then
                                             self:DisableTarget(true)
                                         else
                                             self:LeftTarget()
                                         end
                                         self:DrawOutlineEntity(entity, false)
-                                    elseif not hasFocus and IsDisabledControlPressed(0, RSGCore.Shared.Keybinds['MOUSE1']) then
+                                    elseif not hasFocus and IsDisabledControlPressed(0, 0x07CE1E61) then
                                         self:EnableNUI(self:CloneTable(sendData))
                                         self:DrawOutlineEntity(entity, false)
                                     elseif #(playerCoords - zone.center) > zone.targetoptions.distance then
-                                        if IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+                                        if IsControlReleased(0, 0x8AAA0AD4) then
                                             self:DisableTarget(true)
                                         else
                                             self:LeftTarget()
@@ -461,7 +461,7 @@ local Functions = {
                                     end
                                     Wait(5)
                                 end
-                                if IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+                                if IsControlReleased(0, 0x8AAA0AD4) then
                                     self:DisableTarget(true)
                                 else
                                     self:LeftTarget()
@@ -540,20 +540,20 @@ local Functions = {
                 local _, coords, entity2 = self:RaycastCamera(hit)
                 local distance = #(playerCoords - coords)
                 if entity ~= entity2 then
-                    if IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+                    if IsControlReleased(0, 0x8AAA0AD4) then
                         self:DisableTarget(true)
                     else
                         self:LeftTarget()
                     end
                     self:DrawOutlineEntity(entity, false)
                     break
-                elseif not hasFocus and IsDisabledControlPressed(0, RSGCore.Shared.Keybinds['MOUSE1']) then
+                elseif not hasFocus and IsDisabledControlPressed(0, 0x07CE1E61) then
                     self:EnableNUI(self:CloneTable(sendData))
                     self:DrawOutlineEntity(entity, false)
                 else
                     for k, v in pairs(send_distance) do
                         if v and distance > k then
-                            if IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+                            if IsControlReleased(0, 0x8AAA0AD4) then
                                 self:DisableTarget(true)
                             else
                                 self:LeftTarget()
@@ -565,7 +565,7 @@ local Functions = {
                 end
                 Wait(5)
             end
-            if IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+            if IsControlReleased(0, 0x8AAA0AD4) then
                 self:DisableTarget(true)
             else
                 self:LeftTarget()
@@ -761,9 +761,7 @@ CreateThread(function()
     while true do
         Wait(0)
         if Config.Toggle then
-            if IsControlJustPressed(0, RSGCore.Shared.Keybinds['LALT']) then
-                playerPed = PlayerPedId()
-                SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
+            if IsControlJustPressed(0, 0x8AAA0AD4) then
                 if (not enabled) then
                     ExecuteCommand('+playerTarget')
                     enabled = true
@@ -773,14 +771,12 @@ CreateThread(function()
                 end
             end
         else
-            if IsControlPressed(0, RSGCore.Shared.Keybinds['LALT']) then
-                playerPed = PlayerPedId()
-                SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
+            if IsControlPressed(0, 0x8AAA0AD4) then
                 if (not enabled) then
                     ExecuteCommand('+playerTarget')
                     enabled = true
                 end
-            elseif IsControlReleased(0, RSGCore.Shared.Keybinds['LALT']) then
+            elseif IsControlReleased(0, 0x8AAA0AD4) then
                 if enabled then
                     ExecuteCommand('-playerTarget')
                     enabled = false

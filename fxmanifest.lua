@@ -3,9 +3,14 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 game 'rdr3'
 
 description 'rsg-target'
-version '1.0.0'
+version '1.0.1'
 
 ui_page 'html/index.html'
+
+
+shared_scripts {
+    '@ox_lib/init.lua'
+}
 
 client_scripts {
     '@PolyZone/client.lua',
@@ -28,6 +33,8 @@ files {
 }
 
 dependencies {
-    'PolyZone',
-    'rsg-core'
+    "PolyZone",
+    "rsg-core"
 }
+
+lua54 'yes'

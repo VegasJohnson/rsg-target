@@ -18,9 +18,6 @@ Config.EnableOutline = false
 -- Enable default options (Toggling vehicle doors)
 Config.EnableDefaultOptions = false
 
--- Enable object highlight
-Config.EnableObjectHighlight = false
-
 -------------------------------------------------------------------------------
 -- Target Configs
 -------------------------------------------------------------------------------

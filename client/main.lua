@@ -410,7 +410,7 @@ local Functions = {
                         local data = Models[GetEntityModel(entity)]
                         if data ~= nil then
                             self:CheckEntity(hit, data, entity, #(plyCoords - coords))
-                            SetPickupLight(entity, true)
+                            SetPickupLight(entity, Config.EnablePickupLight)
                         end
                     end
 

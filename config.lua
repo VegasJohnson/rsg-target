@@ -18,6 +18,9 @@ Config.EnableOutline = false
 -- Enable default options (Toggling vehicle doors)
 Config.EnableDefaultOptions = false
 
+-- Picket objects flash if set to true
+Config.EnablePickupLight = false
+
 -------------------------------------------------------------------------------
 -- Target Configs
 -------------------------------------------------------------------------------

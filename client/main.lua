@@ -289,6 +289,7 @@ local Functions = {
                         DisableControlAction(0, 0xA987235F, true) -- MOUSE MOVE RIGHT
                         DisableControlAction(0, 0xD2047988, true) -- MOUSE MOVE DOWN
                     end
+                    SetCurrentPedWeapon(cache.ped, `WEAPON_UNARMED`, true)
                     DisablePlayerFiring(PlayerId(), true)
                     DisableControlAction(0, 0x07CE1E61, true) -- INPUT_ATTACK
                     DisableControlAction(0, 0xF84FA74F, true) -- INPUT_AIM
